@@ -1,4 +1,4 @@
-// ============================================================================
+/* // ============================================================================
 //         PROJETO WAR ESTRUTURADO - DESAFIO DE CÓDIGO
 // ============================================================================
 //        
@@ -96,3 +96,71 @@ int main() {
 
 // limparBufferEntrada():
 // Função utilitária para limpar o buffer de entrada do teclado (stdin), evitando problemas com leituras consecutivas de scanf e getchar.
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h> // Para strcspn()
+ 
+// --- Constantes Globais ---
+#define MAX_TERRITORIOS 5
+#define TAM_STRING 50
+
+// --- Definição da Estrutura (Structs) ---
+struct War{
+    char nome[TAM_STRING];
+    char cor[TAM_STRING];
+    int tropa;
+};
+
+// --- Função para limpar o buffer de entrada ---
+void LimparBufferEntrada(){
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+// --- Função Principal (main) ---
+int main(){
+    struct War mapa[MAX_TERRITORIOS];
+    int totalTerritorios = 0;
+    // Loop para cadastrar até 5 territorios
+    for (totalTerritorios = 0; totalTerritorios < MAX_TERRITORIOS; totalTerritorios++){
+        printf("\n --- Cadastrando territorio ---\n");
+        
+        printf("Nome do Territorio: ");
+
+        fgets(mapa[totalTerritorios].nome, TAM_STRING, stdin);
+        mapa[totalTerritorios].nome[strcspn(mapa[totalTerritorios].nome, "\n")] = '\n';
+        printf("Cor do Exercito (ex: Azul, verde...): ");
+
+        fgets(mapa[totalTerritorios].cor, TAM_STRING, stdin);       
+        mapa[totalTerritorios].cor[strcspn(mapa[totalTerritorios].cor, "\n")] = '\n';
+                
+        printf("Numero de Tropas: ");
+        scanf("%d", &mapa[totalTerritorios].tropa);
+        LimparBufferEntrada();
+
+        printf("\nTerritorio cadastrado com sucesso!\n");
+}
+            
+printf("\nPressione Enter para listar os territorios...");
+getchar(); // Pausa para o usuario ler a mensagem antes de voltar para o menu.
+
+    printf("\n==== LISTA DE TERRITÓRIOS ====\n");
+{
+    for (int i = 0; i < totalTerritorios; i++){
+        printf("----------------------------------\n");
+        printf(" - TERRITORIO %d\n", i + 1);
+        printf(" - Nome: %s\n", mapa[i].nome);
+        printf(" - Dominado por: Exercito %s\n", mapa[i].cor);
+        printf(" - Tropas: %d\n", mapa[i].tropa);
+    }
+    printf("----------------------------------\n");
+}
+// A pausa é crucial para que o usuario veja a lista antes
+// do proximo loop limpar a tela;
+printf("\nPressione Enter para SAIR...");
+getchar();
+
+    return 0;
+}
+
